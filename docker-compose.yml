@@ -1,0 +1,28 @@
+version: '3'
+services:
+    node:
+        build:
+            context: /root/workspace/portfolio-yiting/nix
+            dockerfile: /root/workspace/eris/Dockerfile
+        container_name: node-eris
+        working_dir: /home/node/app
+        volumes:
+            - /root/workspace/portfolio-yiting/nix:/home/node/app
+            - node_modules:/home/node/app/node_modules
+            - web_data:/home/node/app/dist
+        command: "npm run build"
+    nginx:
+        image: nginx:latest
+        container_name: nginx-eris
+        depends_on:
+            - node
+        volumes:
+            - ./nginx/conf.d:/etc/nginx/conf.d
+            - web_data:/usr/share/nginx/html/nix
+            - /root/workspace/portfolio-yiting:/usr/share/nginx/html/portfolio-yiting
+        ports:
+            - 80:80
+        command: [nginx, '-g', 'daemon off;']
+volumes:
+    node_modules:
+    web_data:
