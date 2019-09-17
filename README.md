@@ -1,0 +1,1 @@
+curl -s https://raw.githubusercontent.com/zenanhu/eris/master/init.sh | bash /dev/stdin
