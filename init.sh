@@ -60,13 +60,13 @@ function init_repos() {
     cd ~
     mkdir workspace
     cd workspace
-    git clone git@github.com:zenanhu/eris.git
-    git clone git@github.com:zenanhu/mars.git 
-    git clone git@github.com:YitingLiu/portfolio.git ./portfolio-yiting
+    git clone --depth 1 git@github.com:zenanhu/eris.git
+    git clone --depth 1 git@github.com:zenanhu/mars.git 
+    git clone --depth 1 git@github.com:YitingLiu/portfolio.git ./portfolio-yiting
 }
 
 function init_vim() {
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    git clone --depth 1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     curl -o ~/.vimrc https://raw.githubusercontent.com/zenanhu/pluto/master/vimrc
     vim +PluginInstall +qall
 }
