@@ -40,7 +40,12 @@ function generate_ssh_key() {
 
 # Input new shadowsocks password
 function input_ss_password() {
-    read -s -p "Input new shadowsocks password or leave empty to use default:" PW
+    if [[ -z "${SS_PASSWORD}" ]]; then
+        read -s -p "Input new shadowsocks password or leave empty to use default:" PW
+    else
+        echo "SS_PASSWORD is already set."
+        return 0
+    fi
     echo
     if [ -z "$PW" ]; then
         echo "Shadowsocks will use the default password."
@@ -78,7 +83,7 @@ function start_docker() {
     docker-compose -f docker-compose.yml up -d
 }
 
-enable_password_login
+#enable_password_login
 generate_ssh_key
 input_ss_password
 install_pkg

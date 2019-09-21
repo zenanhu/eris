@@ -11,14 +11,27 @@ services:
             - node_modules:/home/node/app/node_modules
             - web_data:/home/node/app/dist
         command: "npm run build"
+    node-mars:
+        build:
+            context: /root/workspace/mars/www/web
+            dockerfile: /root/workspace/eris/Dockerfile
+        container_name: node-mars
+        working_dir: /home/node/app
+        volumes:
+            - /root/workspace/mars/www/web:/home/node/app
+            - node_modules:/home/node/app/node_modules
+            - mars_web_data:/home/node/app/dist
+        command: "npm run build"
     nginx:
         image: nginx:latest
         container_name: nginx-eris
         depends_on:
             - node
+            - node-mars
         volumes:
             - ./nginx/conf.d:/etc/nginx/conf.d
             - web_data:/usr/share/nginx/html/nix
+            - mars_web_data:/usr/share/nginx/html/mars_web
             - /root/workspace/portfolio-yiting:/usr/share/nginx/html/portfolio-yiting
         ports:
             - 80:80
@@ -26,3 +39,4 @@ services:
 volumes:
     node_modules:
     web_data:
+    mars_web_data:
